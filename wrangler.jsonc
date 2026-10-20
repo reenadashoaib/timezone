@@ -1,0 +1,11 @@
+// Cloudflare Workers config: serves the static site in public/.
+// Deploy with: npx wrangler deploy
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "time-zone-converter",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  }
+}

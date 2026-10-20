@@ -15,19 +15,15 @@ Open http://localhost:8000. To see the full-screen ad straight away, open http:/
 
 ## Deploy to Cloudflare
 
-**Cloudflare Pages, connected to GitHub (recommended)**
+The site runs as a Cloudflare Worker that serves the static files in `public/` (set up in `wrangler.jsonc`). It is live at https://time-zone-converter.reenadashoaib.workers.dev.
 
-1. In the Cloudflare dashboard, go to Workers & Pages, choose Create, then Pages, then Connect to Git.
-2. Pick this repository and branch.
-3. Framework preset: None. Build command: leave empty. Build output directory: `public`.
-4. Save and deploy. Every push to the branch redeploys.
-5. Add your domain under the project's Custom domains tab.
-
-**Direct upload with Wrangler**
+To publish changes:
 
 ```bash
-npx wrangler pages deploy public --project-name=time-zone-converter
+npx wrangler deploy
 ```
+
+To use your own domain, open the `time-zone-converter` Worker in the Cloudflare dashboard, go to Settings, then Domains & Routes, and add a custom domain. The domain must be on Cloudflare.
 
 `public/_headers` sets security and cache headers, and `public/404.html` is served for unknown pages.
 
