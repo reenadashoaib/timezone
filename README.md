@@ -48,7 +48,7 @@ All ad settings are in `public/assets/ads-config.js`. Each space has a key:
 | `tile-4` to `tile-6` | Row under popular conversions | 300 × 250 |
 | `bottom-banner` | Above the footer | 728 × 90, responsive |
 | `video` | Floating box, bottom-right, closable | 16:9 player, 320 px wide (176 px on phones) |
-| `interstitial` | Full-screen overlay, once per visitor per day | Fills the screen |
+| `interstitial` | Full-screen overlay after 8 seconds, once per visit | Fills the screen |
 
 For each space you can:
 

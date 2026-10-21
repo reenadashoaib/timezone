@@ -8,7 +8,7 @@
     slots: raw.slots || {},
     custom: raw.custom || {},
     video: Object.assign({ enabled: true, delaySeconds: 4 }, raw.video),
-    interstitial: Object.assign({ enabled: true, delaySeconds: 30, closeAfterSeconds: 5, frequencyHours: 24 }, raw.interstitial),
+    interstitial: Object.assign({ enabled: true, delaySeconds: 8, closeAfterSeconds: 5, frequencyHours: 0 }, raw.interstitial),
   };
 
   const safe = (fn, fallback = null) => { try { return fn(); } catch { return fallback; } };
@@ -121,8 +121,11 @@
     const ic = cfg.interstitial;
     if (!dlg || !ic.enabled) return;
     const forced = new URLSearchParams(location.search).get('preview') === 'interstitial';
+    // frequencyHours 0 means once per visit (browser session); above 0, once per that many hours.
+    const perVisit = !(ic.frequencyHours > 0);
     const last = Number(local.get('tzc:interstitial-at') || 0);
-    if (!forced && Date.now() - last < ic.frequencyHours * 3600 * 1000) return;
+    if (!forced && perVisit && session.get('tzc:interstitial-shown')) return;
+    if (!forced && !perVisit && Date.now() - last < ic.frequencyHours * 3600 * 1000) return;
 
     const closeBtn = dlg.querySelector('.interstitial-close');
     let returnFocus = null;
@@ -161,6 +164,7 @@
       if (!fill(dlg.querySelector('.ad'))) { dlg.hidden = true; return; }
       document.body.classList.add('is-locked');
       local.set('tzc:interstitial-at', String(Date.now()));
+      session.set('tzc:interstitial-shown', '1');
 
       let left = Math.max(0, Math.round(ic.closeAfterSeconds));
       const tick = () => {

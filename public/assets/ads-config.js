@@ -40,11 +40,11 @@ window.TZC_ADS = {
     delaySeconds: 4,
   },
 
-  // Full-screen ad shown once per visitor in a set period.
+  // Full-screen ad that covers the page until the visitor closes it.
   interstitial: {
     enabled: true,
-    delaySeconds: 30,
-    closeAfterSeconds: 5,
-    frequencyHours: 24,
+    delaySeconds: 8,        // seconds on the page before it appears
+    closeAfterSeconds: 5,   // seconds before the Close button works
+    frequencyHours: 0,      // 0 = once per visit; 24 = at most once a day
   },
 };
